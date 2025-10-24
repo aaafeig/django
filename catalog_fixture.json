@@ -1,0 +1,57 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+        "title": "Овощи",
+        "description": "Вкусные и полезные"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "title": "Фрукты",
+        "description": "Спелые и дешевые"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "title": "Помидор",
+        "description": "Помидор",
+        "image": "",
+        "category": 1,
+        "price": 60,
+        "updated_at": "2025-10-24",
+        "created_at": "2025-10-24"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "title": "Яблоко",
+        "description": "Яблоко",
+        "image": "",
+        "category": 2,
+        "price": 40,
+        "updated_at": "2025-10-24",
+        "created_at": "2025-10-24"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "title": "Банан",
+        "description": "Банан",
+        "image": "",
+        "category": 2,
+        "price": 30,
+        "updated_at": "2025-10-24",
+        "created_at": "2025-10-24"
+    }
+}
+]
