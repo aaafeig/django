@@ -11,7 +11,7 @@
         <h1 class="mb-4">{{ product.title }}</h1>
         <p>Описание продукта: {{product.description|default:"описание отсутствует"}}</p>
         <p>Цена: {{product.price}} руб. за 1 шт.</p>
-        <p>Категория продукта: {{product.category}}</p>
+        <p>Категория продукта: {{product.category.title}}</p>
     </div>
 
     <script src="/static/js/bootstrap.bundle.min.js"></script>
