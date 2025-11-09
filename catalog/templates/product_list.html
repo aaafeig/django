@@ -5,7 +5,7 @@
 <ul class="list-group">
     {% for product in products %}
         <li class="list-group-item">
-            <a href="{% url 'catalog:product_detail' product.id %}" class="h3">{{ product.title|truncatechars:10 }}</a>
+            <a href="{% url 'catalog:product-detail' product.pk %}" class="h3">{{ product.title|truncatechars:10 }}</a>
             <p>{{ product.description|truncatechars:200 }}</p>
             <p>{{ product.price }} руб. за штуку</p>
         </li>

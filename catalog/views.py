@@ -1,25 +1,21 @@
 from django.shortcuts import render
 from .models import Product, Category
+from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Create your views here.
 
-def contacts(request):
-    if request.method == "GET":
-        return render(request, 'contacts.html')
+class ProductListView(ListView):
+    model = Product
+    template_name = 'product_list.html'
+    context_object_name = 'products'
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product_detail.html'
+    context_object_name = 'product'
 
 
-def home(request):
-    products = Product.objects.all().order_by('category__title')
-    context = {
-        "products": products
-    }
 
-    return render(request, "home.html", context=context)
-
-def product_detail(request, product_id=1):
-    product = Product.objects.get(id=product_id)
-    context = {
-        "product": product
-    }
-
-    return render(request, "product_details.html", context=context)
+class ContactsView(TemplateView):
+    template_name = 'contacts.html'
