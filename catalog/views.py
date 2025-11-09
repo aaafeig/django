@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Product
+from .models import Product, Category
 
 # Create your views here.
 
@@ -9,14 +9,14 @@ def contacts(request):
 
 
 def home(request):
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('category__title')
     context = {
         "products": products
     }
 
     return render(request, "home.html", context=context)
 
-def product_details(request, product_id=1):
+def product_detail(request, product_id=1):
     product = Product.objects.get(id=product_id)
     context = {
         "product": product

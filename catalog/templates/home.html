@@ -1,24 +1,14 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Главная страница</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1 class="mb-4">Главная</h1>
-        <ul class="list-group">
-            {% for product in products %}
-                <li class="list-group-item">
-                    <p class="h3">{{ product.title|truncatechars:10 }}</p>
-                    <p>{{ product.description|truncatechars:200 }}</p>
-                    <p>{{ product.price }} руб. за штуку</p>
-                </li>
-            {% endfor %}
-        </ul>
-    </div>
-    <script src="/static/scripts/bootstrap.bundle.js"></script>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Главная</h2>
+<ul class="list-group">
+    {% for product in products %}
+        <li class="list-group-item">
+            <a href="{% url 'catalog:product_detail' product.id %}" class="h3">{{ product.title|truncatechars:10 }}</a>
+            <p>{{ product.description|truncatechars:200 }}</p>
+            <p>{{ product.price }} руб. за штуку</p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
