@@ -10,4 +10,4 @@ class AdminCategory(admin.ModelAdmin):
 class AdminProduct(admin.ModelAdmin):
     list_display = ('id', 'title', 'price', 'category')
     list_filter = ('category', )
-    search_fields = ('name', 'description',)
+    search_fields = ('title', 'description',)
