@@ -1,14 +1,32 @@
 {% extends 'base.html' %}
 
+{% block title %}Главная{% endblock %}
+
 {% block content %}
-<h2 class="mb-4">Главная</h2>
-<ul class="list-group">
+<h2 class="mb-4 text-center text-primary fw-bold">Наши товары</h2>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
     {% for product in products %}
-        <li class="list-group-item">
-            <a href="{% url 'catalog:product_detail' product.id %}" class="h3">{{ product.title|truncatechars:10 }}</a>
-            <p>{{ product.description|truncatechars:200 }}</p>
-            <p>{{ product.price }} руб. за штуку</p>
-        </li>
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="card-img-top object-fit-cover" style="height: 200px;" alt="{{ product.title }}">
+            {% else %}
+                <img src="/static/images/no-image.jpg" class="card-img-top" style="height: 200px;" alt="Нет изображения">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a href="{% url 'catalog:product_detail' product.id %}" class="text-decoration-none text-dark">
+                        {{ product.title|truncatechars:30 }}
+                    </a>
+                </h5>
+                <p class="card-text small text-muted">{{ product.description|truncatechars:100 }}</p>
+            </div>
+            <div class="card-footer bg-white">
+                <span class="fw-bold text-primary">{{ product.price }} ₽</span> <span class="text-muted">/ шт.</span>
+            </div>
+        </div>
+    </div>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}
