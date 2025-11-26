@@ -8,6 +8,32 @@ class ProductForm(forms.ModelForm):
         model = Product
         fields = ['title','description', 'image', 'category', 'price']
 
+    def __init__(self, *args, **kwargs):
+        super(ProductForm, self).__init__(*args, **kwargs)
+        self.fields['title'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Введите название товара'
+        })
+
+        self.fields['description'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Подробное описание товара',
+            'rows': 4
+        })
+
+        self.fields['price'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Введите цену'
+        })
+
+        self.fields['category'].widget.attrs.update({
+            'class': 'form-select'
+        })
+
+        self.fields['image'].widget.attrs.update({
+            'class': 'form-control'
+        })
+
     def clean_title(self):
         title = self.cleaned_data.get('title')
         ban_words = ['казино','криптовалюта','крипта','биржа','дешево','бесплатно','обман','полиция','радар']
