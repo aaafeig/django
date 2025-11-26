@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 
 {% block title %}{{ product.title }}{% endblock %}
 
@@ -19,6 +19,8 @@
                 <p class="h5 text-success mb-3">Цена: {{ product.price }} ₽ / шт.</p>
                 <p class="text-muted">Категория: {{ product.category.title }}</p>
                 <a href="/catalog/" class="btn btn-outline-primary mt-3">← Назад к каталогу</a>
+                <a href="{% url 'catalog:product-update' product.pk %}" class="btn btn-outline-primary mt-3">Редактировать</a>
+                <a href="{% url 'catalog:product-delete' product.pk %}" class="btn btn-outline-primary mt-3">Удалить</a>
             </div>
         </div>
     </div>

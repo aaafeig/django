@@ -1,14 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 
 {% block title %}Главная{% endblock %}
 
 {% block content %}
 <h2 class="mb-4 text-center text-primary fw-bold">Наши товары</h2>
+<div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{% url 'catalog:product-create' %}" class="btn btn-success">Добавить продукт</a>
+</div>
+
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
     {% for product in products %}
     <div class="col">
-        <div class="card h-100 shadow-sm">
+        <div class="card  h-100 shadow-sm">
             {% if product.image %}
                 <img src="{{ product.image.url }}" class="card-img-top object-fit-cover" style="height: 200px;" alt="{{ product.title }}">
             {% else %}
@@ -16,7 +20,7 @@
             {% endif %}
             <div class="card-body">
                 <h5 class="card-title">
-                    <a href="{% url 'catalog:product_detail' product.id %}" class="text-decoration-none text-dark">
+                    <a href="{% url 'catalog:product-detail' product.id %}" class="text-decoration-none text-dark">
                         {{ product.title|truncatechars:30 }}
                     </a>
                 </h5>
