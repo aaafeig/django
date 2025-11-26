@@ -4,10 +4,10 @@
 
 {% block content %}
 <h2>{{ view.title }}</h2>
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <<div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between">
       <button type="submit" class="btn btn-success px-4">Сохранить</button>
       <a href="{% url 'catalog:product-list-view' %}" class="btn btn-outline-secondary px-4">Отмена</a>
     </div>

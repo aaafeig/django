@@ -14,3 +14,9 @@ class ProductForm(forms.ModelForm):
         if title.lower() in ban_words:
             raise ValidationError('В название есть запрещенные слова')
         return title
+
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price <= 0:
+            raise ValidationError('Цена может быть только больше нуля')
+        return price
