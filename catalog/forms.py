@@ -41,11 +41,11 @@ class ProductForm(forms.ModelForm):
             raise ValidationError('В название есть запрещенные слова')
         return title
 
-    def clean_title(self):
-        description = self.cleaned_data.get('title')
+    def clean_description(self):
+        description = self.cleaned_data.get('description')
         ban_words = ['казино','криптовалюта','крипта','биржа','дешево','бесплатно','обман','полиция','радар']
         if any(description in word for word in ban_words):
-            raise ValidationError('В название есть запрещенные слова')
+            raise ValidationError('В описание есть запрещенные слова')
         return description
 
 
