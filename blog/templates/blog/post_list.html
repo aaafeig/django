@@ -3,21 +3,26 @@
 {% block title %}Блог{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="text-primary">Блог</h1>
-    <div>
+
+<h1 class="text-primary mb-3">Блоги</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="btn-group">
         <a href="{% url 'blog:post_list' %}?published=true"
            class="btn {% if is_published_filter %}btn-info{% else %}btn-outline-info{% endif %} btn-sm">
             Только опубликованные
         </a>
+
         <a href="{% url 'blog:post_list' %}"
            class="btn {% if not is_published_filter %}btn-info{% else %}btn-outline-info{% endif %} btn-sm">
             Все статьи
         </a>
-        <a href="{% url 'blog:post_create' %}" class="btn btn-success">Создать пост</a>
     </div>
-</div>
 
+    <a href="{% url 'blog:post_create' %}" class="btn btn-success">
+        + Создать пост
+    </a>
+</div>
 <div class="row">
     {% for post in posts %}
     <div class="col-md-6 col-lg-4 mb-4">
