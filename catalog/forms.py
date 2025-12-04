@@ -37,7 +37,7 @@ class ProductForm(forms.ModelForm):
     def clean_title(self):
         title = self.cleaned_data.get('title')
         ban_words = ['казино','криптовалюта','крипта','биржа','дешево','бесплатно','обман','полиция','радар']
-        if title.lower() in ban_words:
+        if any():
             raise ValidationError('В название есть запрещенные слова')
         return title
 
