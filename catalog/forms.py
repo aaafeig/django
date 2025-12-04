@@ -37,9 +37,17 @@ class ProductForm(forms.ModelForm):
     def clean_title(self):
         title = self.cleaned_data.get('title')
         ban_words = ['казино','криптовалюта','крипта','биржа','дешево','бесплатно','обман','полиция','радар']
-        if any():
+        if any(title in word for word in ban_words):
             raise ValidationError('В название есть запрещенные слова')
         return title
+
+    def clean_title(self):
+        description = self.cleaned_data.get('title')
+        ban_words = ['казино','криптовалюта','крипта','биржа','дешево','бесплатно','обман','полиция','радар']
+        if any(description in word for word in ban_words):
+            raise ValidationError('В название есть запрещенные слова')
+        return description
+
 
     def clean_price(self):
         price = self.cleaned_data.get('price')
