@@ -5,6 +5,17 @@
             <a href="/catalog/" class="nav-link text-white">Главная</a>
             <a href="/blog/" class="nav-link text-white">Мои блоги</a>
             <a href="/catalog/contacts/" class="nav-link text-white">Контакты</a>
+            {% if user.is_authenticated %}
+                <form action="{% url 'users:logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="nav-link btn btn-link text-white p-0" style="text-decoration: none;">
+                        Выйти
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'users:register' %}" class="nav-link text-white">Зарегистрироваться</a>
+                <a href="{% url 'users:login' %}" class="nav-link text-white">Войти</a>
+            {% endif %}
         </nav>
     </div>
 </header>
