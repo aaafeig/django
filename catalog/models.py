@@ -23,7 +23,7 @@ class Product(models.Model):
         (published, 'Опубликовано'),
         (unpublished, 'Не опубликовано')
     ]
-    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Владелец')
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Владелец', null=True, blank=True, default=None)
     title = models.CharField(max_length=150, verbose_name = 'Название')
     description = models.TextField(verbose_name = 'Описание')
     image = models.ImageField(upload_to='product_image/', verbose_name = 'Изображение', null=True, blank=True)

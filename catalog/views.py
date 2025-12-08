@@ -16,11 +16,23 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:product-list-view')
 
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'catalog/product_form.html'
     success_url = reverse_lazy('catalog:product-list-view')
+
+    def post(self, request, *args, **kwargs):
+        product = self.get_object()
+
+        if product.owner != request.user:
+            return HttpResponseForbidden("Вы не можете редактировать чужой продукт.")
+
+        return super().dispatch(request, *args, **kwargs)
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
@@ -28,9 +40,14 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('catalog:product-list-view')
 
     def post(self, request, *args, **kwargs):
+        product = self.get_object()
 
         if not request.user.has_perm('catalog.can_promote_student'):
             return HttpResponseForbidden("У вас нет прав для удаления.")
+
+        if product.owner == request.user:
+            return super().dispatch(request, *args, **kwargs)
+
         return super().dispatch(request, *args, **kwargs)
 
 
