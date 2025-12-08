@@ -1,9 +1,12 @@
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from .forms import ProductForm
-from .models import Product, Category
-from django.views.generic import ListView, DetailView, TemplateView
+from .models import Product
+from django.views.generic import ListView, DetailView, TemplateView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
 
 # Create your views here.
 
@@ -24,6 +27,13 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'catalog/product_delete.html'
     success_url = reverse_lazy('catalog:product-list-view')
 
+    def post(self, request, *args, **kwargs):
+
+        if not request.user.has_perm('catalog.can_promote_student'):
+            return HttpResponseForbidden("У вас нет прав для удаления.")
+        return super().dispatch(request, *args, **kwargs)
+
+
 class ProductListView(ListView):
     model = Product
     template_name = 'catalog/product_list.html'
@@ -33,6 +43,38 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
     context_object_name = 'product'
+
+
+class UnpublishProductView(LoginRequiredMixin, View):
+
+    def post(self, request, pk):
+        product = get_object_or_404(Product, pk=pk)
+
+        if not request.user.has_perm('catalog.can_unpublish_product'):
+            return HttpResponseForbidden("У вас нет прав для снятия публикации.")
+
+        product.is_published = False
+        product.save()
+
+        return redirect('catalog:product-detail', pk=pk)
+
+class UnPublishProductView(PermissionRequiredMixin, View):
+    permission_required = 'catalog.can_unpublish_product'
+
+    def post(self, request, pk):
+        product = get_object_or_404(Product, pk=pk)
+        product.is_published = False
+        product.save()
+        return redirect('catalog:product-detail', pk=pk)
+
+class PublishProductView(PermissionRequiredMixin, View):
+    permission_required = 'catalog.can_unpublish_product'
+
+    def post(self, request, pk):
+        product = get_object_or_404(Product, pk=pk)
+        product.is_published = True
+        product.save()
+        return redirect('catalog:product-detail', pk=pk)
 
 
 class ContactsView(TemplateView):

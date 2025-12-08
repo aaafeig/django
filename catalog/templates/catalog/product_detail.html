@@ -18,9 +18,33 @@
                 <p class="card-text">{{ product.description|default:"Описание отсутствует" }}</p>
                 <p class="h5 text-success mb-3">Цена: {{ product.price }} ₽ / шт.</p>
                 <p class="text-muted">Категория: {{ product.category.title }}</p>
+                {% if product.is_published %}
+                    <span class="badge bg-success">Опубликован</span>
+                {% else %}
+                    <span class="badge bg-secondary">Не опубликован</span>
+                {% endif %}
                 <a href="/catalog/" class="btn btn-outline-primary mt-3">← Назад к каталогу</a>
                 <a href="{% url 'catalog:product-update' product.pk %}" class="btn btn-outline-primary mt-3">Редактировать</a>
-                <a href="{% url 'catalog:product-delete' product.pk %}" class="btn btn-outline-primary mt-3">Удалить</a>
+                {% if perms.catalog.can_unpublish_product %}
+                    {% if product.is_published %}
+                        <form action="{% url 'catalog:product-unpublish' product.pk %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-warning mt-3">
+                                Снять с публикации
+                            </button>
+                        </form>
+                    {% else %}
+                        <form action="{% url 'catalog:product-publish' product.pk %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success mt-3">
+                                Опубликовать
+                            </button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+                {% if perms.catalog.delete_product %}
+                    <a href="{% url 'catalog:product-delete' product.pk %}" class="btn btn-outline-primary mt-3">Удалить</a>
+                {% endif %}
             </div>
         </div>
     </div>
