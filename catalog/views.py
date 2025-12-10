@@ -6,6 +6,8 @@ from .models import Product
 from django.views.generic import ListView, DetailView, TemplateView, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
 
 
 # Create your views here.
@@ -56,6 +58,8 @@ class ProductListView(ListView):
     template_name = 'catalog/product_list.html'
     context_object_name = 'products'
 
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
