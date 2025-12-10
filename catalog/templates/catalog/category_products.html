@@ -1,15 +1,9 @@
 {% extends 'catalog/base.html' %}
-{% include 'catalog/templates/categories_dropdown.html' with categories=categories %}
-{% block title %}Главная{% endblock %}
-
 {% block content %}
-<h2 class="mb-4 text-center text-primary fw-bold">Наши товары</h2>
-<div class="d-flex justify-content-between align-items-center mb-4">
-        <a href="{% url 'catalog:product-create' %}" class="btn btn-success">Добавить продукт</a>
-</div>
 
+<h2>Категория: {{ category.title }}</h2>
 
-<div class="row row-cols-1 row-cols-md-3 g-4">
+<div class="row">
     {% for product in products %}
     <div class="col">
         <div class="card  h-100 shadow-sm">
@@ -33,6 +27,9 @@
             </div>
         </div>
     </div>
+    {% empty %}
+        <p>Нет товаров в этой категории.</p>
     {% endfor %}
 </div>
+
 {% endblock %}
